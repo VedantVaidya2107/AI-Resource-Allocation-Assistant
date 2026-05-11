@@ -20,6 +20,12 @@ export async function POST(req: NextRequest) {
         const risks = await predictDelayRisks(data.projects, data.tasks, data.employees);
         return NextResponse.json(risks);
       
+      case "chat":
+        const { message, history } = payload;
+        const { sendMessageToChat } = await import("@/lib/gemini");
+        const chatResponse = await sendMessageToChat(message, history);
+        return NextResponse.json({ response: chatResponse });
+      
       default:
         return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }

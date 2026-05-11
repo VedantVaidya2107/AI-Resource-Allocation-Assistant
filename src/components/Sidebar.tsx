@@ -56,14 +56,21 @@ export default function Sidebar() {
     setMessages(prev => [...prev, userMsg]);
     setChatInput('');
 
-    // Simulate AI response for demo purposes
-    // In production, this would call /api/gemini/chat
-    setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        role: 'bot', 
-        text: `Based on current workload, Mike Johnson is overloaded (95%), but Alex Brown has significant capacity (85%). I suggest assigning the next UI task to Alex.` 
-      }]);
-    }, 1000);
+    try {
+      const response = await fetch('/api/gemini', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'chat',
+          payload: { message: chatInput, history: messages }
+        })
+      });
+      const data = await response.json();
+      setMessages(prev => [...prev, { role: 'bot', text: data.response }]);
+    } catch (error) {
+      console.error('Chat error:', error);
+      setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I encountered an error. Please try again.' }]);
+    }
   };
 
   return (

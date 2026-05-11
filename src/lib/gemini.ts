@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Employee, Task, Project } from "./zoho";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export async function getResourceRecommendations(task: Task, employees: Employee[]) {
   const prompt = `
@@ -84,9 +84,18 @@ export async function predictDelayRisks(projects: Project[], tasks: Task[], empl
 export async function startAIChat(history: any[]) {
   const chat = model.startChat({
     history: history,
-    generationConfig: {
-      maxOutputTokens: 1000,
-    },
   });
   return chat;
+}
+
+export async function sendMessageToChat(message: string, history: any[]) {
+  const chat = model.startChat({
+    history: history.map(m => ({
+      role: m.role === 'bot' ? 'model' : 'user',
+      parts: [{ text: m.text }],
+    })),
+  });
+  
+  const result = await chat.sendMessage(message);
+  return result.response.text();
 }
