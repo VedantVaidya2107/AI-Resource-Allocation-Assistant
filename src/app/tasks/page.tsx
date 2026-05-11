@@ -58,6 +58,8 @@ export default function TasksPage() {
     const newTask = {
       id: `TSK-${Math.floor(1000 + Math.random() * 9000)}`,
       name: taskName,
+      description: 'Engineered via Tasks Management',
+      projectId: 'PRJ-NEW', // Fallback
       project: formData.get('project') as string,
       assignedTo: assignedTo,
       status: 'In Progress' as const,

@@ -189,6 +189,7 @@ export default function ProjectsPage() {
                   name: formData.get('name') as string,
                   client: formData.get('client') as string,
                   description: formData.get('description') as string,
+                  startDate: new Date().toISOString().split('T')[0],
                   deadline: formData.get('deadline') as string,
                   status: 'Active' as const,
                   priority: formData.get('priority') as any,

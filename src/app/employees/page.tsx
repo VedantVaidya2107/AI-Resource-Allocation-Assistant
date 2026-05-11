@@ -171,14 +171,16 @@ export default function EmployeesPage() {
                 e.preventDefault();
                 const formData = new FormData(e.currentTarget);
                 const newEmployee = {
-                  id: `EMP-${Math.floor(100 + Math.random() * 899)}`,
+                  id: `EMP-${Math.floor(1000 + Math.random() * 9000)}`,
                   name: formData.get('name') as string,
                   role: formData.get('role') as string,
-                  email: `${(formData.get('name') as string).toLowerCase().replace(' ', '.')}@fristine.ai`,
+                  department: 'Engineering',
                   skills: (formData.get('skills') as string).split(',').map(s => s.trim()),
                   currentLoad: 0,
+                  pastPerformance: 100,
                   availability: 'Active' as const,
-                  performance: 5.0,
+                  workingHours: 40,
+                  joinDate: new Date().toISOString().split('T')[0],
                   leaveSchedule: []
                 };
                 dispatch({ type: 'ADD_EMPLOYEE', payload: newEmployee });
