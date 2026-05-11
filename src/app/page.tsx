@@ -98,7 +98,7 @@ export default function Dashboard() {
         >
           {employees.filter(e => e.currentLoad > 80).map(e => (
             <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-rose-500/5 rounded-xl border border-rose-500/10 hover:bg-rose-500/10 transition-colors">
-              <span className="text-rose-200 font-bold">{e.name}</span>
+              <span className="text-rose-700 dark:text-rose-200 font-bold">{e.name}</span>
               <span className="text-rose-500 font-black">{e.currentLoad}% Load</span>
             </div>
           ))}
@@ -116,7 +116,7 @@ export default function Dashboard() {
           <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3">Top Available Talent</p>
           {employees.slice().sort((a,b) => a.currentLoad - b.currentLoad).slice(0, 3).map(e => (
             <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10 hover:bg-emerald-500/10 transition-colors">
-              <span className="text-emerald-200 font-bold">{e.name}</span>
+              <span className="text-emerald-700 dark:text-emerald-200 font-bold">{e.name}</span>
               <span className="text-emerald-500 font-black">{100 - e.currentLoad}% Free</span>
             </div>
           ))}
@@ -176,7 +176,7 @@ export default function Dashboard() {
                     {employee.currentLoad}%
                   </span>
                 </div>
-                <div className="h-1.5 w-full bg-slate-950 rounded-full overflow-hidden p-[1px]">
+                <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[1px]">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${employee.currentLoad}%` }}
@@ -215,20 +215,20 @@ export default function Dashboard() {
               <motion.div 
                 key={task.id} 
                 whileHover={{ x: 10 }}
-                className="flex items-center justify-between p-6 bg-slate-950/30 rounded-3xl border border-white/5 hover:border-accent-blue/30 transition-all"
+                className="flex items-center justify-between p-6 bg-slate-100/50 dark:bg-slate-950/30 rounded-3xl border border-slate-200 dark:border-white/5 hover:border-accent-blue/30 transition-all"
               >
                 <div className="space-y-1">
-                  <h4 className="font-bold text-slate-100">{task.name}</h4>
+                  <h4 className="font-bold text-foreground">{task.name}</h4>
                   <div className="flex items-center gap-2">
                     <span className="w-1 h-1 rounded-full bg-slate-600" />
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">{task.project}</p>
                   </div>
                 </div>
                 <div className="text-right space-y-1">
-                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full bg-white/5 text-slate-400 border border-white/5">
+                  <span className="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 rounded-full bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/5">
                     {task.status}
                   </span>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 block pt-1">Due {task.deadline}</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-slate-600 block pt-1">Due {task.deadline}</p>
                 </div>
               </motion.div>
             ))}
@@ -254,11 +254,11 @@ export default function Dashboard() {
           </div>
           <div className="space-y-10">
             {projects.map((project, idx) => (
-              <div key={project.id} className="flex flex-col gap-6 p-8 bg-white/5 rounded-[2rem] border border-white/5 hover:border-accent-blue/30 transition-all group/item">
+              <div key={project.id} className="flex flex-col gap-6 p-8 bg-slate-50 dark:bg-white/5 rounded-[2rem] border border-slate-100 dark:border-white/5 hover:border-accent-blue/30 transition-all group/item">
                 <div className="flex justify-between items-start">
                   <div>
-                    <h4 className="font-bold text-lg text-white group-hover/item:text-accent-blue transition-colors">{project.name}</h4>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">Client: {project.client}</p>
+                    <h4 className="font-bold text-lg text-foreground group-hover/item:text-accent-blue transition-colors">{project.name}</h4>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">Client: {project.client}</p>
                   </div>
                   <div className="px-3 py-1 bg-accent-blue/10 text-accent-blue rounded-lg text-[8px] font-black uppercase tracking-widest border border-accent-blue/20">
                     {project.status}
@@ -267,10 +267,10 @@ export default function Dashboard() {
                 
                 <div className="space-y-3">
                   <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                    <span className="text-slate-500">Progress</span>
-                    <span className="text-slate-200">{project.progress}%</span>
+                    <span className="text-slate-600 dark:text-slate-500">Progress</span>
+                    <span className="text-foreground">{project.progress}%</span>
                   </div>
-                  <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden">
+                  <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-900 rounded-full overflow-hidden">
                     <motion.div 
                       initial={{ width: 0 }}
                       animate={{ width: `${project.progress}%` }}
@@ -282,7 +282,7 @@ export default function Dashboard() {
                 <div className="flex justify-between items-center pt-2">
                   <div className="flex -space-x-2">
                     {[1,2,3].map(i => (
-                      <div key={i} className="w-8 h-8 rounded-lg bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[8px] font-black text-slate-500">
+                      <div key={i} className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-950 flex items-center justify-center text-[8px] font-black text-slate-600 dark:text-slate-500 shadow-sm">
                         MB
                       </div>
                     ))}
