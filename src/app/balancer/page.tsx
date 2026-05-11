@@ -1,18 +1,15 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { getZohoData, Employee } from '@/lib/zoho';
+import React, { useState } from 'react';
+import { useStore } from '@/lib/store';
 import { Scale, RefreshCw, AlertCircle, Info, ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function BalancerPage() {
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const { state } = useStore();
+  const { employees } = state;
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [suggestions, setSuggestions] = useState<string>('');
-
-  useEffect(() => {
-    getZohoData().then(data => setEmployees(data.employees));
-  }, []);
 
   const handleBalance = async () => {
     setIsAnalyzing(true);

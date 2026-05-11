@@ -13,11 +13,19 @@ import {
   ChevronRight,
   Send,
   Bot,
-  User
+  User,
+  Briefcase,
+  ListTodo,
+  Users,
+  Calendar,
+  BarChart3,
+  Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { useStore } from '@/lib/store';
+import { Task } from '@/lib/zoho';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -25,12 +33,18 @@ function cn(...inputs: ClassValue[]) {
 
 const navItems = [
   { name: 'Dashboard', href: '/', icon: LayoutDashboard },
-  { name: 'Assign Task', href: '/assign', icon: UserPlus },
-  { name: 'Balancer', href: '/balancer', icon: Scale },
+  { name: 'Projects', href: '/projects', icon: Briefcase },
+  { name: 'Tasks', href: '/tasks', icon: ListTodo },
+  { name: 'Employees', href: '/employees', icon: Users },
+  { name: 'Task Assignment', href: '/assign', icon: UserPlus },
+  { name: 'Workload Balancer', href: '/balancer', icon: Scale },
   { name: 'Delay Risks', href: '/risks', icon: AlertTriangle },
+  { name: 'Schedule', href: '/schedule', icon: Calendar },
+  { name: 'Reports', href: '/reports', icon: BarChart3 },
+  { name: 'Settings', href: '/settings', icon: Settings },
 ];
 
-export default function Sidebar() {
+export function Sidebar() {
   const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -48,6 +62,7 @@ export default function Sidebar() {
     scrollToBottom();
   }, [messages]);
 
+  const { state, dispatch } = useStore();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -74,7 +89,32 @@ export default function Sidebar() {
       if (data.error) {
         setMessages(prev => [...prev, { role: 'bot', text: `Error: ${data.error}` }]);
       } else {
-        setMessages(prev => [...prev, { role: 'bot', text: data.response }]);
+        const aiResponse = data.response;
+        setMessages(prev => [...prev, { role: 'bot', text: aiResponse.message }]);
+
+        // Handle AI Actions
+        if (aiResponse.action === 'create_task' && aiResponse.data) {
+          const newTask: Task = {
+            id: Math.random().toString(36).substr(2, 9),
+            name: aiResponse.data.name,
+            project: aiResponse.data.project,
+            deadline: aiResponse.data.deadline,
+            status: 'Pending',
+            assignee: 'Unassigned',
+            requiredSkills: ['General']
+          };
+          dispatch({ type: 'ADD_TASK', payload: newTask });
+        } else if (aiResponse.action === 'update_status' && aiResponse.data) {
+          const task = state.tasks.find(t => t.id === aiResponse.data.task_id || t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase()));
+          if (task) {
+            dispatch({ type: 'UPDATE_TASK', payload: { ...task, status: aiResponse.data.status } });
+          }
+        } else if (aiResponse.action === 'reassign_task' && aiResponse.data) {
+          const task = state.tasks.find(t => t.id === aiResponse.data.task_id || t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase()));
+          if (task) {
+            dispatch({ type: 'UPDATE_TASK', payload: { ...task, assignee: aiResponse.data.employee_name } });
+          }
+        }
       }
     } catch (error) {
       console.error('Chat error:', error);

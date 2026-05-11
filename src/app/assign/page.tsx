@@ -1,11 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useStore } from '@/lib/store';
 import { Sparkles, Send, CheckCircle2, User, Loader2, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AssignPage() {
+  const { state, dispatch } = useStore();
   const [taskName, setTaskName] = useState('');
+  const [selectedProjectId, setSelectedProjectId] = useState('');
   const [skills, setSkills] = useState('');
   const [deadline, setDeadline] = useState('');
   const [isAnalyzing, setIsAnalyzing] = useState(false);
@@ -96,6 +99,21 @@ export default function AssignPage() {
                 placeholder="e.g. Architect Core Infrastructure" 
                 className="w-full input-field"
               />
+            </div>
+
+            <div className="space-y-3">
+              <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Parent Initiative</label>
+              <select 
+                required
+                value={selectedProjectId}
+                onChange={(e) => setSelectedProjectId(e.target.value)}
+                className="w-full bg-slate-900/50 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white appearance-none cursor-pointer"
+              >
+                <option value="">Select Project...</option>
+                {state.projects.map(p => (
+                  <option key={p.id} value={p.id}>{p.name}</option>
+                ))}
+              </select>
             </div>
             <div className="space-y-3">
               <label className="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] ml-2">Competency Stack (CSV)</label>

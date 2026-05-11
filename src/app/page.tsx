@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { getZohoData, Employee, Project, Task } from '@/lib/zoho';
+import React from 'react';
+import { useStore } from '@/lib/store';
 import { 
   Users, 
   Briefcase, 
@@ -13,20 +13,11 @@ import {
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Dashboard() {
-  const [data, setData] = useState<{employees: Employee[], projects: Project[], tasks: Task[]} | null>(null);
+  const { state } = useStore();
+  const { employees, projects, tasks } = state;
 
-  useEffect(() => {
-    getZohoData().then(setData);
-  }, []);
-
-  if (!data) return (
-    <div className="flex items-center justify-center h-full">
-      <div className="w-8 h-8 border-4 border-accent-blue border-t-transparent rounded-full animate-spin" />
-    </div>
-  );
-
-  const overloadedCount = data.employees.filter(e => e.currentLoad > 80).length;
-  const atRiskCount = data.tasks.filter(t => t.status === 'At Risk').length;
+  const overloadedCount = employees.filter(e => e.currentLoad > 80).length;
+  const atRiskCount = tasks.filter(t => t.status === 'At Risk').length;
 
   return (
     <div className="space-y-12 pb-20">
@@ -66,37 +57,74 @@ export default function Dashboard() {
       >
         <SummaryCard 
           title="Total Employees" 
-          value={data.employees.length} 
+          value={employees.length} 
           icon={<Users className="text-accent-blue" size={24} />} 
           trend="+2 this month"
-          description="Total number of active staff members across all departments including part-time and full-time."
-        />
+          description="Total number of active staff members across all departments."
+          scrollToId="heatmap-section"
+        >
+          {employees.map(e => (
+            <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
+              <span className="text-slate-200 font-bold">{e.name}</span>
+              <span className="text-slate-500 uppercase tracking-widest text-[9px] font-black">{e.role}</span>
+            </div>
+          ))}
+        </SummaryCard>
+
         <SummaryCard 
           title="Active Projects" 
-          value={data.projects.length} 
+          value={projects.length} 
           icon={<Briefcase className="text-accent-cyan" size={24} />} 
           trend="4 in pipeline"
-          description="Ongoing client projects currently in development or testing phase."
-        />
+          description="Ongoing client projects currently in development."
+          scrollToId="projects-section"
+        >
+          {projects.map(p => (
+            <div key={p.id} className="flex justify-between items-center text-xs p-3 bg-white/5 rounded-xl border border-white/5 hover:border-accent-cyan/20 transition-colors">
+              <span className="text-slate-200 font-bold">{p.name}</span>
+              <span className="text-accent-cyan font-black">{p.progress}%</span>
+            </div>
+          ))}
+        </SummaryCard>
+
         <SummaryCard 
           title="Overloaded" 
           value={overloadedCount} 
           icon={<AlertCircle className="text-rose-400" size={24} />} 
           trend="Needs attention"
           isAlert={overloadedCount > 0}
-          description="Employees with a workload exceeding 80%. Consider reassigning tasks to prevent burnout."
-        />
+          description="Employees with a workload exceeding 80%."
+          scrollToId="heatmap-section"
+        >
+          {employees.filter(e => e.currentLoad > 80).map(e => (
+            <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-rose-500/5 rounded-xl border border-rose-500/10 hover:bg-rose-500/10 transition-colors">
+              <span className="text-rose-200 font-bold">{e.name}</span>
+              <span className="text-rose-500 font-black">{e.currentLoad}% Load</span>
+            </div>
+          ))}
+          {overloadedCount === 0 && <p className="text-xs text-slate-600 italic">No resource bottlenecks detected.</p>}
+        </SummaryCard>
+
         <SummaryCard 
           title="Available Capacity" 
           value="45%" 
           icon={<TrendingUp className="text-emerald-400" size={24} />} 
           trend="Avg. across team"
-          description="Remaining team bandwidth calculated by subtracting current load from total 100% capacity."
-        />
+          description="Remaining team bandwidth."
+          scrollToId="heatmap-section"
+        >
+          <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-3">Top Available Talent</p>
+          {employees.slice().sort((a,b) => a.currentLoad - b.currentLoad).slice(0, 3).map(e => (
+            <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-emerald-500/5 rounded-xl border border-emerald-500/10 hover:bg-emerald-500/10 transition-colors">
+              <span className="text-emerald-200 font-bold">{e.name}</span>
+              <span className="text-emerald-500 font-black">{100 - e.currentLoad}% Free</span>
+            </div>
+          ))}
+        </SummaryCard>
       </motion.div>
 
       {/* Team Heatmap */}
-      <section className="space-y-8">
+      <section id="heatmap-section" className="space-y-8 scroll-mt-10">
         <div className="flex items-end justify-between">
           <div className="space-y-1">
             <h2 className="text-3xl font-outfit font-bold tracking-tight text-white">Workload Heatmap</h2>
@@ -110,7 +138,7 @@ export default function Dashboard() {
         </div>
         
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
-          {data.employees.map((employee, idx) => (
+          {employees.map((employee, idx) => (
             <motion.div
               key={employee.id}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -152,10 +180,10 @@ export default function Dashboard() {
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${employee.currentLoad}%` }}
-                    transition={{ duration: 1, delay: 0.8 + (idx * 0.05) }}
-                    className={`h-full rounded-full shadow-[0_0_10px_rgba(0,0,0,0.5)] ${
-                      employee.currentLoad > 80 ? 'bg-gradient-to-r from-rose-600 to-rose-400' : 
-                      employee.currentLoad > 50 ? 'bg-gradient-to-r from-amber-600 to-amber-400' : 'bg-gradient-to-r from-emerald-600 to-emerald-400'
+                    className={`h-full rounded-full ${
+                      employee.currentLoad > 80 ? 'bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.3)]' : 
+                      employee.currentLoad > 50 ? 'bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.3)]' : 
+                      'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]'
                     }`}
                   />
                 </div>
@@ -165,8 +193,8 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* Projects and Tasks Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        {/* Priority Tasks */}
         <motion.section 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
@@ -183,7 +211,7 @@ export default function Dashboard() {
             <button className="text-[10px] font-black uppercase tracking-widest text-accent-blue hover:underline">View All</button>
           </div>
           <div className="space-y-4">
-            {data.tasks.slice(0, 4).map((task, idx) => (
+            {tasks.slice(0, 4).map((task, idx) => (
               <motion.div 
                 key={task.id} 
                 whileHover={{ x: 10 }}
@@ -207,11 +235,13 @@ export default function Dashboard() {
           </div>
         </motion.section>
 
+        {/* Project Vitals */}
         <motion.section 
+          id="projects-section"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.7 }}
-          className="glass-card !p-10 space-y-8"
+          className="glass-card !p-10 space-y-8 scroll-mt-10"
         >
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-outfit font-black tracking-tight flex items-center gap-3">
@@ -223,25 +253,44 @@ export default function Dashboard() {
             <button className="text-[10px] font-black uppercase tracking-widest text-emerald-500 hover:underline">Full Audit</button>
           </div>
           <div className="space-y-10">
-            {data.projects.map(project => (
-              <div key={project.id} className="space-y-4">
-                <div className="flex justify-between items-end">
-                  <div className="space-y-1">
-                    <h4 className="font-bold text-lg text-slate-100 tracking-tight">{project.name}</h4>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">{project.client}</p>
+            {projects.map((project, idx) => (
+              <div key={project.id} className="flex flex-col gap-6 p-8 bg-white/5 rounded-[2rem] border border-white/5 hover:border-accent-blue/30 transition-all group/item">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="font-bold text-lg text-white group-hover/item:text-accent-blue transition-colors">{project.name}</h4>
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">Client: {project.client}</p>
                   </div>
-                  <div className="text-right">
-                    <span className="text-2xl font-black font-outfit text-white">{project.progress}%</span>
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">Completion</p>
+                  <div className="px-3 py-1 bg-accent-blue/10 text-accent-blue rounded-lg text-[8px] font-black uppercase tracking-widest border border-accent-blue/20">
+                    {project.status}
                   </div>
                 </div>
-                <div className="h-3 w-full bg-slate-950 rounded-full overflow-hidden p-[2px]">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${project.progress}%` }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-blue-600 to-accent-blue rounded-full shadow-[0_0_15px_rgba(59,130,246,0.5)]"
-                  />
+                
+                <div className="space-y-3">
+                  <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
+                    <span className="text-slate-500">Progress</span>
+                    <span className="text-slate-200">{project.progress}%</span>
+                  </div>
+                  <div className="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${project.progress}%` }}
+                      className="h-full bg-accent-blue"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between items-center pt-2">
+                  <div className="flex -space-x-2">
+                    {[1,2,3].map(i => (
+                      <div key={i} className="w-8 h-8 rounded-lg bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[8px] font-black text-slate-500">
+                        MB
+                      </div>
+                    ))}
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[8px] font-black uppercase tracking-widest text-slate-600">Deadline</p>
+                    <p className="text-[10px] font-bold text-slate-400">{project.deadline}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -252,13 +301,20 @@ export default function Dashboard() {
   );
 }
 
-function SummaryCard({ title, value, icon, trend, isAlert, description }: any) {
-  const [isExpanded, setIsExpanded] = useState(false);
+function SummaryCard({ title, value, icon, trend, isAlert, description, children, scrollToId }: any) {
+  const handleTeleport = () => {
+    if (scrollToId) {
+      const element = document.getElementById(scrollToId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   return (
     <motion.div 
       layout
-      onClick={() => setIsExpanded(!isExpanded)}
+      onClick={handleTeleport}
       whileHover={{ 
         y: -12, 
         scale: 1.02,
@@ -282,31 +338,13 @@ function SummaryCard({ title, value, icon, trend, isAlert, description }: any) {
         <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">{title}</p>
         <h3 className="text-4xl font-outfit font-black tracking-tight text-white">{value}</h3>
       </div>
-
-      <AnimatePresence>
-        {isExpanded && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="mt-6 pt-6 border-t border-white/5 relative z-10"
-          >
-            <p className="text-sm text-slate-400 leading-relaxed font-medium">
-              {description}
-            </p>
-            <div className={`mt-4 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest ${isAlert ? 'text-rose-400' : 'text-accent-blue'}`}>
-              <div className={`w-2 h-2 rounded-full animate-pulse ${isAlert ? 'bg-rose-500' : 'bg-accent-blue'}`} />
-              Live System Telemetry
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
       
-      {!isExpanded && (
-        <div className="mt-4 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0">
-          <div className="text-[8px] text-slate-600 uppercase font-black tracking-widest">Click to Expand Insight</div>
+      <div className="mt-8 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 relative z-10">
+        <div className="p-1.5 bg-white/5 rounded-lg text-slate-400">
+          <TrendingUp size={12} />
         </div>
-      )}
+        <div className="text-[8px] text-slate-500 uppercase font-black tracking-widest">Click to Teleport to Data</div>
+      </div>
     </motion.div>
   );
 }

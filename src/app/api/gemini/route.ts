@@ -9,7 +9,8 @@ export async function POST(req: NextRequest) {
 
     switch (action) {
       case "recommend":
-        const recommendations = await getResourceRecommendations(payload.task, data.employees);
+        const employees = payload.employees || data.employees;
+        const recommendations = await getResourceRecommendations(payload.task, employees);
         return NextResponse.json(recommendations);
       
       case "balance":
