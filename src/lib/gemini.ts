@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Employee, Task, Project } from "./zoho";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" }, { apiVersion: "v1" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 export async function getResourceRecommendations(task: Task, employees: Employee[]) {
   const prompt = `
@@ -151,6 +151,11 @@ ACTION SCHEMAS:
     }
   } catch (error) {
     console.error("Gemini Chat Error:", error);
-    return "The AI is currently unavailable. Please check your API key or try again later.";
+    return {
+      message: "The AI is currently unavailable. Please check your API key or try again later.",
+      intent: "query",
+      action: null,
+      data: null
+    };
   }
 }

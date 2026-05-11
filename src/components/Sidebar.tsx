@@ -95,24 +95,44 @@ export function Sidebar() {
         // Handle AI Actions
         if (aiResponse.action === 'create_task' && aiResponse.data) {
           const newTask: Task = {
-            id: Math.random().toString(36).substr(2, 9),
+            id: `TSK-${Math.floor(1000 + Math.random() * 9000)}`,
             name: aiResponse.data.name,
-            project: aiResponse.data.project,
-            deadline: aiResponse.data.deadline,
-            status: 'Pending',
-            assignee: 'Unassigned',
-            requiredSkills: ['General']
+            description: 'Created via AI Assistant',
+            projectId: 'AI-GEN', // Fallback project ID
+            project: aiResponse.data.project || 'Unassigned Project',
+            type: 'AI Task',
+            complexity: 'Medium',
+            deadline: aiResponse.data.deadline || new Date().toISOString().split('T')[0],
+            status: 'Unassigned',
+            assignedTo: '',
+            requiredSkills: ['General'],
+            estimatedHours: 8
           };
           dispatch({ type: 'ADD_TASK', payload: newTask });
         } else if (aiResponse.action === 'update_status' && aiResponse.data) {
-          const task = state.tasks.find(t => t.id === aiResponse.data.task_id || t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase()));
+          const task = state.tasks.find(t => 
+            t.id === aiResponse.data.task_id || 
+            t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase())
+          );
           if (task) {
-            dispatch({ type: 'UPDATE_TASK', payload: { ...task, status: aiResponse.data.status } });
+            const validStatuses: Task['status'][] = ['Unassigned', 'In Progress', 'Completed', 'At Risk'];
+            const newStatus = aiResponse.data.status as Task['status'];
+            if (validStatuses.includes(newStatus)) {
+              dispatch({ type: 'UPDATE_TASK', payload: { ...task, status: newStatus } });
+            }
           }
         } else if (aiResponse.action === 'reassign_task' && aiResponse.data) {
-          const task = state.tasks.find(t => t.id === aiResponse.data.task_id || t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase()));
+          const task = state.tasks.find(t => 
+            t.id === aiResponse.data.task_id || 
+            t.name.toLowerCase().includes(aiResponse.data.task_id?.toLowerCase())
+          );
           if (task) {
-            dispatch({ type: 'UPDATE_TASK', payload: { ...task, assignee: aiResponse.data.employee_name } });
+            const employee = state.employees.find(e => 
+              e.name.toLowerCase().includes(aiResponse.data.employee_name?.toLowerCase())
+            );
+            if (employee) {
+              dispatch({ type: 'UPDATE_TASK', payload: { ...task, assignedTo: employee.id, status: 'In Progress' } });
+            }
           }
         }
       }
