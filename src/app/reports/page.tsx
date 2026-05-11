@@ -145,7 +145,7 @@ export default function ReportsPage() {
                     animate={{ width: `${p.progress}%` }}
                     transition={{ delay: 0.8 + (idx * 0.2), duration: 1.5 }}
                     className={`h-full rounded-md ${
-                      p.status === 'Delayed' ? 'bg-rose-500' : 'bg-gradient-to-r from-accent-blue to-cyan-400'
+                      p.status === 'On Hold' ? 'bg-rose-500' : 'bg-gradient-to-r from-accent-blue to-cyan-400'
                     }`}
                   />
                 </div>
