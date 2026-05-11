@@ -89,13 +89,22 @@ export async function startAIChat(history: any[]) {
 }
 
 export async function sendMessageToChat(message: string, history: any[]) {
-  const chat = model.startChat({
-    history: history.map(m => ({
-      role: m.role === 'bot' ? 'model' : 'user',
-      parts: [{ text: m.text }],
-    })),
-  });
-  
-  const result = await chat.sendMessage(message);
-  return result.response.text();
+  try {
+    const chat = model.startChat({
+      history: history.map(m => ({
+        role: m.role === 'bot' ? 'model' : 'user',
+        parts: [{ text: m.text }],
+      })),
+      systemInstruction: "You are the AI Resource Allocation Assistant. You help users manage employees, tasks, and project risks. Use the context of the team: Alex Brown (UI/UX), Mike Johnson (Backend), Sarah Wilson (DevOps), David Chen (Frontend), Emily Davis (QA). Be concise and professional.",
+    });
+    
+    const result = await chat.sendMessage(message);
+    const response = result.response;
+    const text = response.text();
+    
+    return text || "I'm sorry, I couldn't generate a response. Please try rephrasing.";
+  } catch (error) {
+    console.error("Gemini Chat Error:", error);
+    return "The AI is currently unavailable. Please check your API key or try again later.";
+  }
 }

@@ -48,13 +48,17 @@ export default function Sidebar() {
     scrollToBottom();
   }, [messages]);
 
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!chatInput.trim()) return;
+    if (!chatInput.trim() || isLoading) return;
 
-    const userMsg = { role: 'user', text: chatInput };
+    const currentInput = chatInput;
+    const userMsg = { role: 'user', text: currentInput };
     setMessages(prev => [...prev, userMsg]);
     setChatInput('');
+    setIsLoading(true);
 
     try {
       const response = await fetch('/api/gemini', {
@@ -62,14 +66,21 @@ export default function Sidebar() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           action: 'chat',
-          payload: { message: chatInput, history: messages }
+          payload: { message: currentInput, history: messages }
         })
       });
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'bot', text: data.response }]);
+      
+      if (data.error) {
+        setMessages(prev => [...prev, { role: 'bot', text: `Error: ${data.error}` }]);
+      } else {
+        setMessages(prev => [...prev, { role: 'bot', text: data.response }]);
+      }
     } catch (error) {
       console.error('Chat error:', error);
-      setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I encountered an error. Please try again.' }]);
+      setMessages(prev => [...prev, { role: 'bot', text: 'Connection lost. Please check your network.' }]);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -77,42 +88,48 @@ export default function Sidebar() {
     <div className="relative flex">
       {/* Sidebar Navigation */}
       <motion.aside 
-        animate={{ width: isCollapsed ? 80 : 260 }}
-        className="h-screen bg-navy-900 border-r border-white/10 flex flex-col z-20"
+        animate={{ width: isCollapsed ? 100 : 280 }}
+        className="h-screen bg-slate-950/80 backdrop-blur-2xl border-r border-white/5 flex flex-col z-20 shadow-2xl"
       >
-        <div className="p-6 flex items-center justify-between">
+        <div className="p-8 flex items-center justify-between">
           {!isCollapsed && (
             <motion.h1 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-xl font-outfit font-bold bg-gradient-to-r from-accent-blue to-accent-cyan bg-clip-text text-transparent"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="text-2xl font-outfit font-black tracking-tighter bg-gradient-to-br from-white to-slate-500 bg-clip-text text-transparent"
             >
               ALLOCATOR
             </motion.h1>
           )}
           <button 
             onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-1.5 rounded-lg hover:bg-white/5 text-gray-400"
+            className="p-2.5 rounded-2xl hover:bg-white/5 text-slate-400 transition-colors border border-white/5"
           >
             {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
           </button>
         </div>
 
-        <nav className="flex-1 px-4 py-4 space-y-2">
+        <nav className="flex-1 px-4 py-4 space-y-3">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
               <Link key={item.name} href={item.href}>
                 <div className={cn(
-                  "flex items-center gap-4 px-3 py-3 rounded-xl transition-all group",
-                  isActive ? "bg-accent-blue/10 text-accent-blue" : "text-gray-400 hover:bg-white/5 hover:text-white"
+                  "flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group relative",
+                  isActive ? "bg-accent-blue/10 text-white shadow-[0_0_20px_rgba(59,130,246,0.1)]" : "text-slate-500 hover:bg-white/5 hover:text-slate-200"
                 )}>
-                  <item.icon size={22} className={cn(isActive ? "text-accent-blue" : "group-hover:text-white")} />
+                  {isActive && (
+                    <motion.div 
+                      layoutId="active-pill"
+                      className="absolute left-0 w-1 h-8 bg-accent-blue rounded-r-full"
+                    />
+                  )}
+                  <item.icon size={22} className={cn("transition-transform duration-300 group-hover:scale-110", isActive ? "text-accent-blue" : "")} />
                   {!isCollapsed && (
                     <motion.span 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="font-medium"
+                      className="font-bold text-sm tracking-tight"
                     >
                       {item.name}
                     </motion.span>
@@ -123,16 +140,16 @@ export default function Sidebar() {
           })}
         </nav>
 
-        <div className="p-4 border-t border-white/10">
+        <div className="p-6 border-t border-white/5">
           <button 
             onClick={() => setShowChat(true)}
             className={cn(
-              "w-full flex items-center gap-4 px-3 py-3 rounded-xl bg-accent-blue/10 text-accent-blue hover:bg-accent-blue/20 transition-all",
+              "w-full flex items-center gap-4 px-4 py-4 rounded-2xl bg-gradient-to-br from-accent-blue to-blue-700 text-white shadow-lg shadow-blue-500/20 hover:shadow-blue-500/40 hover:scale-[1.02] transition-all active:scale-95",
               isCollapsed && "justify-center"
             )}
           >
-            <MessageSquare size={22} />
-            {!isCollapsed && <span className="font-medium">AI Assistant</span>}
+            <MessageSquare size={22} className="shrink-0" />
+            {!isCollapsed && <span className="font-bold text-sm">AI Assistant</span>}
           </button>
         </div>
       </motion.aside>
@@ -181,13 +198,26 @@ export default function Sidebar() {
                     {msg.role === 'user' ? <User size={18} /> : <Bot size={18} />}
                   </div>
                   <div className={cn(
-                    "p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed",
+                    "p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm",
                     msg.role === 'user' ? "bg-accent-blue text-white rounded-tr-none" : "glass text-gray-200 rounded-tl-none"
                   )}>
                     {msg.text}
                   </div>
                 </div>
               ))}
+
+              {isLoading && (
+                <div className="flex gap-3 flex-row">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center shrink-0 bg-white/10 text-gray-300">
+                    <Bot size={18} />
+                  </div>
+                  <div className="p-4 rounded-2xl glass text-gray-200 rounded-tl-none flex gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce [animation-delay:0.2s]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-slate-500 animate-bounce [animation-delay:0.4s]" />
+                  </div>
+                </div>
+              )}
               <div ref={chatEndRef} />
             </div>
 
