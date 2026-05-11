@@ -83,7 +83,7 @@ export default function BalancerPage() {
           className="lg:col-span-2 space-y-6"
         >
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-outfit font-black tracking-tight text-white">Live Capacity</h2>
+            <h2 className="text-2xl font-outfit font-black tracking-tight text-foreground">Live Capacity</h2>
             <div className="p-2 bg-white/5 rounded-xl border border-white/5">
               <div className="text-[8px] font-black uppercase tracking-widest text-slate-500">Global Average: 62%</div>
             </div>
@@ -106,7 +106,7 @@ export default function BalancerPage() {
                       {emp.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                      <span className="font-bold text-slate-200 block">{emp.name}</span>
+                      <span className="font-bold text-foreground block">{emp.name}</span>
                       <span className="text-[8px] font-black uppercase tracking-widest text-slate-500">{emp.role}</span>
                     </div>
                   </div>
@@ -136,7 +136,7 @@ export default function BalancerPage() {
           transition={{ delay: 0.5 }}
           className="lg:col-span-3 space-y-6"
         >
-          <h2 className="text-2xl font-outfit font-black tracking-tight text-white mb-2 flex items-center gap-3">
+          <h2 className="text-2xl font-outfit font-black tracking-tight text-foreground mb-2 flex items-center gap-3">
             <div className="p-2 bg-emerald-500/10 rounded-xl">
               <Sparkles size={24} className="text-emerald-500" />
             </div>
@@ -169,12 +169,12 @@ export default function BalancerPage() {
                   </div>
                   <div>
                     <h4 className="font-black text-emerald-500 text-[10px] uppercase tracking-[0.2em] mb-2">Gemini Recommendation</h4>
-                    <p className="text-lg text-slate-300 font-medium leading-relaxed">Optimization path successfully synthesized based on load balancing parameters.</p>
+                    <p className="text-lg text-slate-700 dark:text-slate-300 font-medium leading-relaxed">Optimization path successfully synthesized based on load balancing parameters.</p>
                   </div>
                 </div>
                 
                 <div className="prose prose-invert max-w-none">
-                  <div className="whitespace-pre-wrap text-slate-400 leading-relaxed font-outfit text-xl p-6 bg-white/2 rounded-[2rem] border border-white/5">
+                  <div className="whitespace-pre-wrap text-slate-600 dark:text-slate-400 leading-relaxed font-outfit text-xl p-6 bg-white/2 rounded-[2rem] border border-white/5">
                     {suggestions}
                   </div>
                 </div>

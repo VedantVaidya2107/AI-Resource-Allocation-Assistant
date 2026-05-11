@@ -107,7 +107,7 @@ export default function AssignPage() {
                 required
                 value={selectedProjectId}
                 onChange={(e) => setSelectedProjectId(e.target.value)}
-                className="w-full bg-slate-900/50 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white appearance-none cursor-pointer"
+                className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground dark:text-white appearance-none cursor-pointer"
               >
                 <option value="">Select Project...</option>
                 {state.projects.map(p => (
@@ -166,7 +166,7 @@ export default function AssignPage() {
               Algorithmic Matches
             </h2>
             {recommendations.length > 0 && (
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-500">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">
                 Confidence Level: 94%
               </span>
             )}
@@ -177,16 +177,16 @@ export default function AssignPage() {
               <div className="absolute inset-0 flex flex-col items-center justify-center text-slate-500 gap-6 glass rounded-[2rem]">
                 <div className="w-16 h-16 border-4 border-accent-blue/10 border-t-accent-blue rounded-full animate-spin" />
                 <div className="text-center space-y-2">
-                  <p className="text-lg font-outfit font-bold text-white animate-pulse">Running Neural Ranking</p>
+                  <p className="text-lg font-outfit font-bold text-foreground dark:text-white animate-pulse">Running Neural Ranking</p>
                   <p className="text-xs uppercase tracking-widest font-black opacity-50">Checking team load, skill overlap & performance history</p>
                 </div>
               </div>
             )}
 
             {!isAnalyzing && recommendations.length === 0 && (
-              <div className="flex flex-col items-center justify-center h-full border-2 border-dashed border-white/5 rounded-[2.5rem] text-slate-700 bg-slate-900/10 py-20">
-                <Sparkles size={64} className="mb-6 opacity-10" />
-                <p className="text-lg font-outfit font-bold opacity-30">Await Input Parameters</p>
+              <div className="flex flex-col items-center justify-center h-full border-2 border-dashed border-slate-200 dark:border-white/5 rounded-[2.5rem] text-slate-400 bg-slate-50 dark:bg-slate-900/10 py-20">
+                <Sparkles size={64} className="mb-6 opacity-20 dark:opacity-10" />
+                <p className="text-lg font-outfit font-bold opacity-60 dark:opacity-30">Await Input Parameters</p>
               </div>
             )}
 
@@ -202,14 +202,14 @@ export default function AssignPage() {
                 >
                   <div className="absolute top-0 left-0 w-1 h-full bg-accent-blue opacity-0 group-hover:opacity-100 transition-opacity" />
                   
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-accent-blue font-black text-xl shadow-inner shrink-0 group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-accent-blue font-black text-xl shadow-inner shrink-0 group-hover:scale-110 transition-transform duration-500">
                     {rec.name.split(' ').map((n: string) => n[0]).join('')}
                   </div>
                   <div className="flex-1 space-y-2">
                     <div className="flex justify-between items-start">
                       <div>
-                        <h3 className="text-xl font-bold tracking-tight text-white">{rec.name}</h3>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Verified Personnel</p>
+                        <h3 className="text-xl font-bold tracking-tight text-foreground dark:text-white">{rec.name}</h3>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">Verified Personnel</p>
                       </div>
                       <div className="text-right">
                         <span className="text-3xl font-black font-outfit text-accent-blue">{rec.score}%</span>

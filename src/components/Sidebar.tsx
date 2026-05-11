@@ -19,7 +19,9 @@ import {
   Users,
   Calendar,
   BarChart3,
-  Settings
+  Settings,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx, type ClassValue } from 'clsx';
@@ -145,38 +147,47 @@ export function Sidebar() {
   };
 
   return (
-    <div className="relative flex">
+    <>
       {/* Sidebar Navigation */}
       <motion.aside 
         animate={{ width: isCollapsed ? 100 : 280 }}
-        className="h-screen bg-slate-950/80 backdrop-blur-2xl border-r border-white/5 flex flex-col z-20 shadow-2xl"
+        style={{ background: 'var(--sidebar-bg)' }}
+        className="h-screen backdrop-blur-2xl border-r border-white/5 flex flex-col z-20 shadow-2xl shrink-0"
       >
         <div className="p-8 flex items-center justify-between">
           {!isCollapsed && (
             <motion.h1 
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              className="text-2xl font-outfit font-black tracking-tighter bg-gradient-to-br from-white to-slate-500 bg-clip-text text-transparent"
+              className="text-2xl font-outfit font-black tracking-tighter bg-gradient-to-br from-foreground to-slate-500 bg-clip-text text-transparent"
             >
               ALLOCATOR
             </motion.h1>
           )}
-          <button 
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="p-2.5 rounded-2xl hover:bg-white/5 text-slate-400 transition-colors border border-white/5"
-          >
-            {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
+              className="p-2.5 rounded-2xl hover:bg-white/5 text-slate-400 transition-colors border border-white/5"
+            >
+              {state.theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
+            <button 
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className="p-2.5 rounded-2xl hover:bg-white/5 text-slate-400 transition-colors border border-white/5"
+            >
+              {isCollapsed ? <ChevronRight size={20} /> : <ChevronLeft size={20} />}
+            </button>
+          </div>
         </div>
 
         <nav className="flex-1 px-4 py-4 space-y-3">
           {navItems.map((item) => {
             const isActive = pathname === item.href;
             return (
-              <Link key={item.name} href={item.href}>
+              <Link key={item.name} href={item.href} className="block group">
                 <div className={cn(
-                  "flex items-center gap-4 px-4 py-4 rounded-2xl transition-all duration-300 group relative",
-                  isActive ? "bg-accent-blue/10 text-white shadow-[0_0_20px_rgba(59,130,246,0.1)]" : "text-slate-500 hover:bg-white/5 hover:text-slate-200"
+                  "flex items-center gap-4 px-5 py-4 rounded-2xl transition-all duration-300 relative",
+                  isActive ? "bg-accent-blue/10 text-foreground shadow-[0_0_20px_rgba(59,130,246,0.1)]" : "text-slate-600 dark:text-slate-500 hover:bg-white/5 hover:text-foreground"
                 )}>
                   {isActive && (
                     <motion.div 
@@ -184,12 +195,12 @@ export function Sidebar() {
                       className="absolute left-0 w-1 h-8 bg-accent-blue rounded-r-full"
                     />
                   )}
-                  <item.icon size={22} className={cn("transition-transform duration-300 group-hover:scale-110", isActive ? "text-accent-blue" : "")} />
+                  <item.icon size={22} className={cn("transition-transform duration-300 group-hover:scale-110 shrink-0", isActive ? "text-accent-blue" : "")} />
                   {!isCollapsed && (
                     <motion.span 
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="font-bold text-sm tracking-tight"
+                      className="font-bold text-sm tracking-tight truncate"
                     >
                       {item.name}
                     </motion.span>
@@ -230,7 +241,7 @@ export function Sidebar() {
                   <Bot size={24} />
                 </div>
                 <div>
-                  <h3 className="font-outfit font-bold">Gemini AI</h3>
+                  <h3 className="font-outfit font-bold">Gemini 2.5 Flash</h3>
                   <p className="text-xs text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                     Online
@@ -301,6 +312,6 @@ export function Sidebar() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

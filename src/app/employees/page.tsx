@@ -64,7 +64,7 @@ export default function EmployeesPage() {
           placeholder="Search by name or role..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-slate-900/50 border border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white transition-all"
+          className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground transition-all"
         />
       </div>
 
@@ -86,7 +86,7 @@ export default function EmployeesPage() {
                     {employee.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold tracking-tight text-white">{employee.name}</h3>
+                    <h3 className="text-xl font-bold tracking-tight text-foreground">{employee.name}</h3>
                     <p className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-2 mt-1">
                       <Briefcase size={12} className="text-accent-blue" />
                       {employee.role}
@@ -188,7 +188,7 @@ export default function EmployeesPage() {
               }} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Legal Name</label>
-                  <input name="name" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white" placeholder="e.g. Alexander Pierce" />
+                  <input name="name" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground" placeholder="e.g. Alexander Pierce" />
                 </div>
 
                 <div className="space-y-2">

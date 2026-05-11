@@ -167,7 +167,7 @@ export default function TasksPage() {
                   <ListTodo size={24} />
                 </div>
                 <div className="min-w-0">
-                  <h3 className="text-xl font-bold text-white tracking-tight truncate">{task.name}</h3>
+                  <h3 className="text-xl font-bold text-foreground tracking-tight truncate">{task.name}</h3>
                   <div className="flex flex-wrap items-center gap-4 mt-1">
                     <span className="text-[10px] font-black uppercase tracking-widest text-slate-500 flex items-center gap-1.5">
                       <Briefcase size={12} className="text-accent-purple" />
@@ -194,8 +194,8 @@ export default function TasksPage() {
               <div className="flex items-center gap-10 shrink-0 w-full md:w-auto justify-between md:justify-end border-t md:border-none border-white/5 pt-4 md:pt-0">
                 <div className="flex items-center gap-4">
                   <div className="text-right hidden sm:block">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600">Assigned To</p>
-                    <p className="text-xs font-bold text-slate-300">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">Assigned To</p>
+                    <p className="text-xs font-bold text-slate-600 dark:text-slate-300">
                       {state.employees.find(e => e.id === task.assignedTo)?.name || 'Unassigned'}
                     </p>
                   </div>
@@ -210,11 +210,11 @@ export default function TasksPage() {
 
                 <div className="flex items-center gap-6">
                   <div className="text-right">
-                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 flex items-center gap-1.5 justify-end">
+                    <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 flex items-center gap-1.5 justify-end">
                       <Clock size={10} />
                       Deadline
                     </p>
-                    <p className="text-xs font-bold text-slate-300">{task.deadline}</p>
+                    <p className="text-xs font-bold text-slate-600 dark:text-slate-300">{task.deadline}</p>
                   </div>
                   <button className="p-4 rounded-2xl bg-white/5 hover:bg-emerald-500 hover:text-white text-slate-500 transition-all active:scale-90">
                     <CheckCircle2 size={20} />
@@ -249,7 +249,7 @@ export default function TasksPage() {
               <form onSubmit={handleCreateTask} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Task Objective</label>
-                  <input name="name" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white" placeholder="e.g. Optimize Database Sharding" />
+                  <input name="name" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" placeholder="e.g. Optimize Database Sharding" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -263,7 +263,7 @@ export default function TasksPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Execution Category</label>
-                    <select name="type" className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white appearance-none">
+                    <select name="type" className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground appearance-none">
                       <option value="UI Design">UI Design</option>
                       <option value="API Development">API Development</option>
                       <option value="Database">Database</option>
@@ -288,7 +288,7 @@ export default function TasksPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Deadline</label>
-                    <input name="deadline" type="date" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white" />
+                    <input name="deadline" type="date" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" />
                   </div>
                 </div>
 

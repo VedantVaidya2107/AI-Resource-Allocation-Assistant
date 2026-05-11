@@ -64,7 +64,7 @@ export default function ProjectsPage() {
             placeholder="Search projects..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full bg-slate-900/50 border border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white transition-all"
+            className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground transition-all placeholder:text-slate-500"
           />
         </div>
         
@@ -97,8 +97,8 @@ export default function ProjectsPage() {
                       <Briefcase size={24} />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-black font-outfit tracking-tight text-white group-hover:text-accent-cyan transition-colors">{project.name}</h3>
-                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Client: {project.client}</p>
+                      <h3 className="text-2xl font-black font-outfit tracking-tight text-foreground group-hover:text-accent-cyan transition-colors">{project.name}</h3>
+                      <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">Client: {project.client}</p>
                     </div>
                   </div>
                 </div>
@@ -120,12 +120,12 @@ export default function ProjectsPage() {
                   <span className="text-slate-500">Development Progress</span>
                   <span className="text-white font-black">{project.progress}%</span>
                 </div>
-                <div className="h-3 w-full bg-slate-950 rounded-full overflow-hidden p-[2px]">
+                <div className="h-3 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[2px]">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${project.progress}%` }}
                     transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="h-full bg-gradient-to-r from-accent-cyan to-blue-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.5)]"
+                    className="h-full bg-gradient-to-r from-accent-cyan to-blue-500 rounded-full shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_15px_rgba(6,182,212,0.5)]"
                   />
                 </div>
               </div>
@@ -135,13 +135,13 @@ export default function ProjectsPage() {
                   {project.teamIds.map((id, i) => (
                     <div 
                       key={id} 
-                      className="w-10 h-10 rounded-xl bg-slate-800 border-2 border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-400"
+                      className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border-2 border-white dark:border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-600 dark:text-slate-400 shadow-sm"
                       title={`Member ID: ${id}`}
                     >
                       {state.employees.find(e => e.id === id)?.name.split(' ').map(n => n[0]).join('') || '?'}
                     </div>
                   ))}
-                  <div className="w-10 h-10 rounded-xl bg-slate-900 border-2 border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-500">
+                  <div className="w-10 h-10 rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-white dark:border-slate-950 flex items-center justify-center text-[10px] font-black text-slate-400">
                     +{project.tasksCount - project.completedTasks}
                   </div>
                 </div>
@@ -203,28 +203,28 @@ export default function ProjectsPage() {
               }} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Project Name</label>
-                    <input name="name" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white" placeholder="e.g. Quantum Ledger" />
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 ml-2">Project Name</label>
+                    <input name="name" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground placeholder:text-slate-400" placeholder="e.g. Quantum Ledger" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Client Entity</label>
-                    <input name="client" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white" placeholder="e.g. Global FinTech" />
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 ml-2">Client Entity</label>
+                    <input name="client" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground placeholder:text-slate-400" placeholder="e.g. Global FinTech" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Mission Description</label>
-                  <textarea name="description" required rows={3} className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white resize-none" placeholder="Primary objectives and scope..." />
+                  <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 ml-2">Mission Description</label>
+                  <textarea name="description" required rows={3} className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground resize-none placeholder:text-slate-400" placeholder="Primary objectives and scope..." />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Target Deadline</label>
-                    <input name="deadline" type="date" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white" />
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 ml-2">Target Deadline</label>
+                    <input name="deadline" type="date" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground" />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Strategic Priority</label>
-                    <select name="priority" className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-white appearance-none">
+                    <label className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500 ml-2">Strategic Priority</label>
+                    <select name="priority" className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-cyan/50 text-foreground appearance-none">
                       <option value="Low">Low Priority</option>
                       <option value="Medium">Medium Priority</option>
                       <option value="High">High Priority</option>

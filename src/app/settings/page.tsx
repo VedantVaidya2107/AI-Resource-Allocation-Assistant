@@ -51,8 +51,8 @@ export default function SettingsPage() {
               <Key size={24} />
             </div>
             <div>
-              <h2 className="text-2xl font-bold tracking-tight text-white">Gemini Intelligence</h2>
-              <p className="text-slate-500 text-sm">Manage your Google AI access credentials.</p>
+              <h2 className="text-2xl font-bold tracking-tight text-foreground">Gemini Intelligence</h2>
+              <p className="text-slate-600 dark:text-slate-500 text-sm">Manage your Google AI access credentials.</p>
             </div>
           </div>
 
@@ -64,7 +64,7 @@ export default function SettingsPage() {
                 value={state.geminiApiKey}
                 onChange={(e) => dispatch({ type: 'SET_GEMINI_KEY', payload: e.target.value })}
                 placeholder="AIzaSy..."
-                className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white transition-all font-mono"
+                className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground transition-all font-mono"
               />
               <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
                 {state.geminiApiKey ? (
@@ -131,7 +131,7 @@ export default function SettingsPage() {
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-4">
-              <h3 className="text-sm font-bold text-white tracking-tight">Appearance Mode</h3>
+              <h3 className="text-sm font-bold text-foreground tracking-tight">Appearance Mode</h3>
               <button 
                 onClick={() => dispatch({ type: 'TOGGLE_THEME' })}
                 className="w-full flex items-center justify-between p-4 bg-white/5 border border-white/5 rounded-2xl hover:bg-white/10 transition-all"

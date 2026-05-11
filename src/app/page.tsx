@@ -42,7 +42,7 @@ export default function Dashboard() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-slate-400 text-lg max-w-2xl leading-relaxed"
+          className="text-slate-500 dark:text-slate-400 text-lg max-w-2xl leading-relaxed font-medium"
         >
           Optimizing your project lifecycle with real-time AI resource scoring and workload distribution.
         </motion.p>
@@ -65,8 +65,8 @@ export default function Dashboard() {
         >
           {employees.map(e => (
             <div key={e.id} className="flex justify-between items-center text-xs p-3 bg-white/5 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-              <span className="text-slate-200 font-bold">{e.name}</span>
-              <span className="text-slate-500 uppercase tracking-widest text-[9px] font-black">{e.role}</span>
+              <span className="text-foreground font-bold">{e.name}</span>
+              <span className="text-slate-600 dark:text-slate-500 uppercase tracking-widest text-[9px] font-black">{e.role}</span>
             </div>
           ))}
         </SummaryCard>
@@ -81,7 +81,7 @@ export default function Dashboard() {
         >
           {projects.map(p => (
             <div key={p.id} className="flex justify-between items-center text-xs p-3 bg-white/5 rounded-xl border border-white/5 hover:border-accent-cyan/20 transition-colors">
-              <span className="text-slate-200 font-bold">{p.name}</span>
+              <span className="text-foreground font-bold">{p.name}</span>
               <span className="text-accent-cyan font-black">{p.progress}%</span>
             </div>
           ))}
@@ -127,13 +127,13 @@ export default function Dashboard() {
       <section id="heatmap-section" className="space-y-8 scroll-mt-10">
         <div className="flex items-end justify-between">
           <div className="space-y-1">
-            <h2 className="text-3xl font-outfit font-bold tracking-tight text-white">Workload Heatmap</h2>
-            <p className="text-slate-500 text-sm">Visual distribution of task density per resource.</p>
+            <h2 className="text-3xl font-outfit font-bold tracking-tight text-foreground">Workload Heatmap</h2>
+            <p className="text-slate-600 dark:text-slate-500 text-sm font-medium">Visual distribution of task density per resource.</p>
           </div>
-          <div className="flex gap-6 text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 pb-2">
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" /> Optimal</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" /> Balanced</span>
-            <span className="flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]" /> Critical</span>
+          <div className="flex gap-6 text-xs font-black uppercase tracking-[0.2em] text-slate-600 dark:text-slate-500 pb-2">
+            <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]" /> Optimal</span>
+            <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-amber-500 shadow-[0_0_10px_rgba(245,158,11,0.5)]" /> Balanced</span>
+            <span className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_10px_rgba(244,63,94,0.5)]" /> Critical</span>
           </div>
         </div>
         
@@ -166,13 +166,13 @@ export default function Dashboard() {
                 {employee.name.split(' ').map(n => n[0]).join('')}
               </div>
               <div className="space-y-1">
-                <h3 className="font-bold text-lg tracking-tight group-hover:text-accent-blue transition-colors">{employee.name}</h3>
-                <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">{employee.role}</p>
+                <h3 className="font-bold text-lg tracking-tight group-hover:text-accent-blue transition-colors text-foreground">{employee.name}</h3>
+                <p className="text-[10px] font-black uppercase tracking-widest text-slate-600 dark:text-slate-500">{employee.role}</p>
               </div>
               <div className="w-full space-y-3">
                 <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
-                  <span className="text-slate-500">Utilization</span>
-                  <span className={employee.currentLoad > 80 ? 'text-rose-400' : 'text-slate-200'}>
+                  <span className="text-slate-600 dark:text-slate-500">Utilization</span>
+                  <span className={employee.currentLoad > 80 ? 'text-rose-500' : 'text-foreground'}>
                     {employee.currentLoad}%
                   </span>
                 </div>
@@ -335,8 +335,8 @@ function SummaryCard({ title, value, icon, trend, isAlert, description, children
         </div>
       </div>
       <div className="mt-8 space-y-1 relative z-10">
-        <p className="text-slate-500 text-[10px] font-black uppercase tracking-widest">{title}</p>
-        <h3 className="text-4xl font-outfit font-black tracking-tight text-white">{value}</h3>
+        <p className="text-slate-600 dark:text-slate-500 text-[10px] font-black uppercase tracking-widest">{title}</p>
+        <h3 className="text-4xl font-outfit font-black tracking-tight text-foreground">{value}</h3>
       </div>
       
       <div className="mt-8 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-2 group-hover:translate-y-0 relative z-10">

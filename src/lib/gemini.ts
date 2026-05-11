@@ -2,7 +2,7 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 import { Employee, Task, Project } from "./zoho";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
 export async function getResourceRecommendations(task: Task, employees: Employee[]) {
   const prompt = `
@@ -111,8 +111,8 @@ export async function sendMessageToChat(message: string, history: any[]) {
         role: m.role === 'bot' ? 'model' : 'user',
         parts: [{ text: m.text }],
       })),
-      systemInstruction: `You are the AI Resource Allocation Assistant. 
-You help users manage employees, tasks, and project risks.
+      systemInstruction: `You are the AI Resource Allocation Assistant, powered by Gemini 2.5 Flash. 
+You help users manage employees, tasks, and project risks with extreme precision.
 Context: Alex Brown (UI/UX), Mike Johnson (Backend), Sarah Wilson (DevOps), David Chen (Frontend), Emily Davis (QA).
 
 CAPABILITIES:
