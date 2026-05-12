@@ -233,15 +233,15 @@ export function Sidebar() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-navy-800 border-l border-white/10 shadow-2xl z-30 flex flex-col"
+            className="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-slate-50 dark:bg-navy-800 border-l border-slate-200 dark:border-white/10 shadow-2xl z-30 flex flex-col"
           >
-            <div className="p-6 border-b border-white/10 flex items-center justify-between bg-navy-900/50">
+            <div className="p-6 border-b border-slate-200 dark:border-white/10 flex items-center justify-between bg-white dark:bg-navy-900/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-accent-blue/20 flex items-center justify-center text-accent-blue">
                   <Bot size={24} />
                 </div>
                 <div>
-                  <h3 className="font-outfit font-bold">Gemini 2.5 Flash</h3>
+                  <h3 className="font-outfit font-bold text-foreground dark:text-white">Gemini 2.5 Flash</h3>
                   <p className="text-xs text-green-400 flex items-center gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                     Online
@@ -270,7 +270,7 @@ export function Sidebar() {
                   </div>
                   <div className={cn(
                     "p-4 rounded-2xl max-w-[85%] text-sm leading-relaxed shadow-sm",
-                    msg.role === 'user' ? "bg-accent-blue text-white rounded-tr-none" : "glass text-gray-200 rounded-tl-none"
+                    msg.role === 'user' ? "bg-accent-blue text-white rounded-tr-none" : "glass text-slate-700 dark:text-gray-200 rounded-tl-none"
                   )}>
                     {msg.text}
                   </div>
@@ -292,14 +292,14 @@ export function Sidebar() {
               <div ref={chatEndRef} />
             </div>
 
-            <form onSubmit={handleSendMessage} className="p-6 border-t border-white/10 bg-navy-900/50">
+            <form onSubmit={handleSendMessage} className="p-6 border-t border-slate-200 dark:border-white/10 bg-white dark:bg-navy-900/50">
               <div className="relative">
                 <input 
                   type="text" 
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   placeholder="Ask anything..."
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-accent-blue transition-all"
+                  className="w-full bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-xl px-4 py-3 pr-12 focus:outline-none focus:ring-2 focus:ring-accent-blue transition-all text-foreground dark:text-white"
                 />
                 <button 
                   type="submit"

@@ -64,7 +64,7 @@ export default function EmployeesPage() {
           placeholder="Search by name or role..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground transition-all"
+          className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground transition-all"
         />
       </div>
 
@@ -82,7 +82,7 @@ export default function EmployeesPage() {
             >
               <div className="flex justify-between items-start">
                 <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center text-accent-blue font-black text-xl shadow-inner group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-800 dark:to-slate-900 flex items-center justify-center text-accent-blue font-black text-xl shadow-inner group-hover:scale-110 transition-transform duration-500">
                     {employee.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
@@ -109,11 +109,11 @@ export default function EmployeesPage() {
                     <Activity size={12} className="text-emerald-500" />
                     Current Load
                   </span>
-                  <span className={employee.currentLoad > 80 ? 'text-rose-400' : 'text-slate-200'}>
+                  <span className={employee.currentLoad > 80 ? 'text-rose-400' : 'text-slate-600 dark:text-slate-200'}>
                     {employee.currentLoad}%
                   </span>
                 </div>
-                <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden p-[1px]">
+                <div className="h-2 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[1px]">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${employee.currentLoad}%` }}
@@ -188,17 +188,17 @@ export default function EmployeesPage() {
               }} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Full Legal Name</label>
-                  <input name="name" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground" placeholder="e.g. Alexander Pierce" />
+                  <input name="name" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground" placeholder="e.g. Alexander Pierce" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Professional Role</label>
-                  <input name="role" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white" placeholder="e.g. Lead Systems Architect" />
+                  <input name="role" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground dark:text-white" placeholder="e.g. Lead Systems Architect" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Core Competencies (CSV)</label>
-                  <input name="skills" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-white" placeholder="React, Python, AWS, Kubernetes" />
+                  <input name="skills" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-blue/50 text-foreground dark:text-white" placeholder="React, Python, AWS, Kubernetes" />
                 </div>
 
                 <div className="pt-4 flex gap-4">

@@ -31,7 +31,13 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Invalid action" }, { status: 400 });
     }
   } catch (error: any) {
-    console.error("Gemini API Error:", error);
-    return NextResponse.json({ error: error.message || "Internal Server Error" }, { status: 500 });
+    console.error("Gemini API Error Detail:", {
+      message: error.message,
+      stack: error.stack,
+    });
+    return NextResponse.json({ 
+      error: error.message || "Internal Server Error",
+      details: "Check server logs for full stack trace."
+    }, { status: 500 });
   }
 }

@@ -63,7 +63,7 @@ export default function RisksPage() {
             </div>
           </div>
           <div className="text-center space-y-2">
-            <p className="text-2xl font-outfit font-black text-white animate-pulse">Scanning Neural Timelines</p>
+            <p className="text-2xl font-outfit font-black text-foreground dark:text-white animate-pulse">Scanning Neural Timelines</p>
             <p className="text-[10px] uppercase tracking-[0.3em] font-black text-slate-500">Calculating risk vectors and resource buffers</p>
           </div>
         </div>
@@ -84,7 +84,7 @@ export default function RisksPage() {
                     <AlertTriangle size={32} />
                   </div>
                   <div className="space-y-1">
-                    <h3 className="text-2xl font-black font-outfit tracking-tight text-white">{risk.project}</h3>
+                    <h3 className="text-2xl font-black font-outfit tracking-tight text-foreground dark:text-white">{risk.project}</h3>
                     <p className="text-[10px] text-slate-500 uppercase font-black tracking-widest">Active Initiative</p>
                   </div>
                 </div>
@@ -97,7 +97,7 @@ export default function RisksPage() {
               </div>
 
               <div className="space-y-4 relative z-10">
-                <div className="h-4 w-full bg-slate-950 rounded-full overflow-hidden p-[2px]">
+                <div className="h-4 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[2px]">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${risk.delay_probability}%` }}
@@ -153,7 +153,7 @@ export default function RisksPage() {
           </div>
           <div className="space-y-1">
             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">At-Risk Projects</p>
-            <h4 className="text-3xl font-outfit font-black text-white">1</h4>
+            <h4 className="text-3xl font-outfit font-black text-foreground dark:text-white">1</h4>
           </div>
         </motion.div>
         
@@ -166,7 +166,7 @@ export default function RisksPage() {
           </div>
           <div className="space-y-1">
             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Saturation Alarms</p>
-            <h4 className="text-3xl font-outfit font-black text-white">3</h4>
+            <h4 className="text-3xl font-outfit font-black text-foreground dark:text-white">3</h4>
           </div>
         </motion.div>
 
@@ -179,7 +179,7 @@ export default function RisksPage() {
           </div>
           <div className="space-y-1">
             <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">Forecast Confidence</p>
-            <h4 className="text-3xl font-outfit font-black text-white">92%</h4>
+            <h4 className="text-3xl font-outfit font-black text-foreground dark:text-white">92%</h4>
           </div>
         </motion.div>
       </section>

@@ -125,7 +125,7 @@ export default function TasksPage() {
               placeholder="Search tasks..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-slate-900/50 border border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white transition-all"
+              className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white transition-all"
             />
           </div>
           
@@ -134,7 +134,7 @@ export default function TasksPage() {
             <select 
               value={filterProject}
               onChange={(e) => setFilterProject(e.target.value)}
-              className="w-full bg-slate-900/50 border border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white appearance-none cursor-pointer"
+              className="w-full bg-slate-100 dark:bg-slate-900/50 border border-slate-200 dark:border-white/5 rounded-2xl pl-12 pr-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white appearance-none cursor-pointer"
             >
               <option value="All">All Projects</option>
               {state.projects.map(p => (
@@ -249,13 +249,13 @@ export default function TasksPage() {
               <form onSubmit={handleCreateTask} className="space-y-6">
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Task Objective</label>
-                  <input name="name" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" placeholder="e.g. Optimize Database Sharding" />
+                  <input name="name" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" placeholder="e.g. Optimize Database Sharding" />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Parent Project</label>
-                    <select name="project" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white appearance-none">
+                    <select name="project" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white appearance-none">
                       {state.projects.map(p => (
                         <option key={p.id} value={p.name}>{p.name}</option>
                       ))}
@@ -263,7 +263,7 @@ export default function TasksPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Execution Category</label>
-                    <select name="type" className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground appearance-none">
+                    <select name="type" className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground appearance-none">
                       <option value="UI Design">UI Design</option>
                       <option value="API Development">API Development</option>
                       <option value="Database">Database</option>
@@ -276,7 +276,7 @@ export default function TasksPage() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Complexity</label>
-                    <select name="complexity" className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white appearance-none">
+                    <select name="complexity" className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white appearance-none">
                       <option value="Low">Low</option>
                       <option value="Medium">Medium</option>
                       <option value="High">High</option>
@@ -284,22 +284,22 @@ export default function TasksPage() {
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Est. Hours</label>
-                    <input name="hours" type="number" defaultValue={8} className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white" />
+                    <input name="hours" type="number" defaultValue={8} className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white" />
                   </div>
                   <div className="space-y-2">
                     <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Deadline</label>
-                    <input name="deadline" type="date" required className="w-full bg-slate-900/50 dark:bg-slate-950 border border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" />
+                    <input name="deadline" type="date" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/10 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground" />
                   </div>
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Required Capabilities (CSV)</label>
-                  <input name="skills" required className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white" placeholder="React, Node.js, PostgreSQL" />
+                  <input name="skills" required className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white" placeholder="React, Node.js, PostgreSQL" />
                 </div>
 
                 <div className="space-y-2">
                   <label className="text-[10px] font-black uppercase tracking-widest text-slate-500 ml-2">Assigned Personnel</label>
-                  <select name="assignedTo" className="w-full bg-slate-950 border border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-white appearance-none">
+                  <select name="assignedTo" className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-white/5 rounded-2xl px-6 py-4 focus:outline-none focus:ring-2 focus:ring-accent-purple/50 text-foreground dark:text-white appearance-none">
                     <option value="">Auto-Assign (AI Recommended)</option>
                     {state.employees.map(e => (
                       <option key={e.id} value={e.id}>{e.name} ({e.role})</option>

@@ -114,7 +114,7 @@ export default function BalancerPage() {
                     {emp.currentLoad}%
                   </span>
                 </div>
-                <div className="h-2 w-full bg-slate-950 rounded-full overflow-hidden p-[1px]">
+                <div className="h-2 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[1px]">
                   <motion.div 
                     initial={{ width: 0 }}
                     animate={{ width: `${emp.currentLoad}%` }}
@@ -153,7 +153,7 @@ export default function BalancerPage() {
                   </div>
                 </div>
                 <div className="text-center space-y-2">
-                  <p className="text-2xl font-outfit font-black text-white animate-pulse">Computing Vectors</p>
+                  <p className="text-2xl font-outfit font-black text-foreground dark:text-white animate-pulse">Computing Vectors</p>
                   <p className="text-[10px] uppercase tracking-[0.3em] font-black text-slate-500">Cross-referencing skillsets and project priorities</p>
                 </div>
               </div>

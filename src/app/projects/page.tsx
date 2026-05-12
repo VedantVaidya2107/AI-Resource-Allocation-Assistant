@@ -68,11 +68,11 @@ export default function ProjectsPage() {
           />
         </div>
         
-        <div className="flex bg-slate-900/50 p-1.5 rounded-2xl border border-white/5">
+        <div className="flex bg-slate-100 dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-200 dark:border-white/5">
           <button className="p-2.5 bg-accent-cyan text-white rounded-xl shadow-lg shadow-accent-cyan/20">
             <LayoutGrid size={20} />
           </button>
-          <button className="p-2.5 text-slate-500 hover:text-white transition-colors">
+          <button className="p-2.5 text-slate-500 hover:text-foreground dark:hover:text-white transition-colors">
             <List size={20} />
           </button>
         </div>
@@ -118,7 +118,7 @@ export default function ProjectsPage() {
               <div className="space-y-4">
                 <div className="flex justify-between text-[10px] font-black uppercase tracking-widest">
                   <span className="text-slate-500">Development Progress</span>
-                  <span className="text-white font-black">{project.progress}%</span>
+                  <span className="text-foreground dark:text-white font-black">{project.progress}%</span>
                 </div>
                 <div className="h-3 w-full bg-slate-200 dark:bg-slate-950 rounded-full overflow-hidden p-[2px]">
                   <motion.div 
