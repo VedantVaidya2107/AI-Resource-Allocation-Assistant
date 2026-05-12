@@ -16,8 +16,9 @@ Unlike traditional dashboards, our AI Assistant is directly wired into the appli
 
 ## ✨ Premium Features
 
-### 💎 Cinematic Experience
-- **Glassmorphism 2.0**: Deep frosted-glass layers with adaptive backdrop blurring.
+### 💎 Cinematic Experience & Dual-Theme Architecture
+- **Dual-Theme Fidelity**: Seamlessly switch between **Midnight** and **Daylight** modes with a class-based architecture that guarantees perfect visual contrast, legible inputs, and preserved aesthetics in any environment.
+- **Glassmorphism 2.0**: Deep frosted-glass layers with adaptive backdrop blurring and theme-aware styling.
 - **Dynamic Atmosphere**: Floating cinematic orbs and rotating motivational context in the background.
 - **Micro-Animations**: Staggered Framer Motion orchestrations for every card and list entry.
 
@@ -26,20 +27,21 @@ Unlike traditional dashboards, our AI Assistant is directly wired into the appli
 - **Human Capital Directory**: Onboard personnel with granular skill matrices and live availability pulses.
 - **Operational Backlog**: Categorized task tracking with complexity estimation and resource matching.
 
-### 🔮 Predictive Analytics
+### 🔮 Predictive Analytics & AI Operations
 - **Team Heatmap**: Immediate visual recognition of workforce saturation (Red/Amber/Green).
 - **Delay Risk Panel**: Algorithmic probability scoring for project deadlines based on historical velocity.
 - **Workload Balancer**: AI-suggested reallocations to prevent developer burnout.
+- **Advanced Diagnostics**: Real-time error logging and fallback mechanisms ensure high availability.
 
 ---
 
 ## 🛠️ Tech Stack
 
 - **Core Framework**: [Next.js 14](https://nextjs.org/) (App Router Architecture)
-- **Intelligence Layer**: [Google Gemini 2.5 Flash](https://aistudio.google.com/app/prompts/new) (v1 API)
+- **Intelligence Layer**: [Google Gemini 1.5 Flash](https://aistudio.google.com/app/prompts/new) (Production-Stable API Core)
 - **State Engine**: React Context + Custom `useStore` Hooks (LocalStorage Persisted)
 - **Animation Suite**: [Framer Motion](https://www.framer.com/motion/)
-- **Design System**: Tailwind CSS with Premium Design Tokens
+- **Design System**: Tailwind CSS with Premium, Theme-Aware Design Tokens
 - **Iconography**: Lucide React
 
 ---
