@@ -81,4 +81,4 @@ The Intelligence Engine computes compatibility using a weighted neural vector:
 
 ---
 
-*Built with ❤️ for High-Performance Teams.*
+*Built for High-Performance Teams By Vedant*
